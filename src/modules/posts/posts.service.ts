@@ -1,8 +1,19 @@
-import db from "../../core/database/client";
-import { Post } from "./posts.types";
+import type { FastifyInstance } from "fastify";
 
-export async function getAllPosts(): Promise<Post[]> {
-  const stmt = db.prepare("SELECT * FROM posts");
-  const posts = stmt.all() as Post[];
-  return posts;
-}
+// Define a type for the data needed to create a post
+type CreatePostData = {
+  img_url: string;
+  caption: string;
+};
+
+export const postsService = (fastify: FastifyInstance) => {
+  return {
+    create: async (postData: CreatePostData) => {
+      fastify.log.info(`Creating a new post`);
+      // This will use the MOCK `transactions` in our test,
+      // and the REAL `transactions` in our live application.
+      const post = fastify.transactions.posts.create(postData);
+      return post;
+    },
+  };
+};

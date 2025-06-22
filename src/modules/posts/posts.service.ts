@@ -8,8 +8,9 @@ type CreatePostData = {
 
 export const postsService = (fastify: FastifyInstance) => {
   return {
+    // create a new post in the database
     create: async (postData: CreatePostData) => {
-      fastify.log.info(`Creating a new post`);
+      console.info(`Creating a new post`);
       // This will use the MOCK `transactions` in our test,
       // and the REAL `transactions` in our live application.
       const post = fastify.transactions.posts.create(postData);

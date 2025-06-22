@@ -1,3 +1,5 @@
+// Module Import Issue and Incomplete Mock
+
 import Fastify from "fastify";
 import { postsRoutes } from "./posts.routes";
 

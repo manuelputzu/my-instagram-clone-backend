@@ -9,6 +9,11 @@ export const createTransactionHelpers = (db: Database) => {
     createPost: db.prepare(
       "INSERT INTO posts (img_url, caption) VALUES (@img_url, @caption) RETURNING *",
     ),
+    getReelById: db.prepare("SELECT * FROM reels WHERE id = ?"),
+    getAllReels: db.prepare("SELECT * FROM reels"),
+    createReel: db.prepare(
+      "INSERT INTO reels (mov_url, caption) VALUES (@mov_url, @caption) RETURNING *",
+    ),
   };
 
   const posts = {
@@ -23,8 +28,21 @@ export const createTransactionHelpers = (db: Database) => {
     },
   };
 
+  const reels = {
+    getById: (id: number) => {
+      return statements.getReelById.get(id);
+    },
+    getAll: () => {
+      return statements.getAllReels.all();
+    },
+    create: (data: { mov_url: string; caption: string }) => {
+      return statements.createReel.get(data);
+    },
+  };
+
   return {
     posts,
+    reels,
   };
 };
 

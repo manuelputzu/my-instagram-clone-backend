@@ -1,3 +1,5 @@
+// Missing Implementation and Typing Errors
+
 import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { postsService } from "./posts.service";
 

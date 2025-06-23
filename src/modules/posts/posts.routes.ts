@@ -1,5 +1,3 @@
-// Missing Implementation and Typing Errors
-
 import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { postsService } from "./posts.service";
 
@@ -12,12 +10,17 @@ type CreatePostBody = {
 const postsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const service = postsService(fastify);
 
+  // GET /posts
+  fastify.get("/posts", async (_request, reply) => {
+    const posts = await service.getAll();
+    reply.send(posts);
+  });
+
+  // POST /posts
   fastify.post<{ Body: CreatePostBody }>("/posts", async (request, reply) => {
     const newPost = await service.create(request.body);
-
-    // Return a 201 Created status code with the new post object
     return reply.code(201).send(newPost);
   });
 };
 
-export { postsRoutes };
+export default postsRoutes;

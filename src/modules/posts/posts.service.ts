@@ -16,5 +16,10 @@ export const postsService = (fastify: FastifyInstance) => {
       const post = fastify.transactions.posts.create(postData);
       return post;
     },
+    getAll: async () => {
+      fastify.log.info("Fetching all posts");
+      const posts = fastify.transactions.posts.getAll();
+      return posts
+    }
   };
 };

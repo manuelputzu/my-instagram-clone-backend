@@ -1,7 +1,7 @@
 // Module Import Issue and Incomplete Mock
 
 import Fastify from "fastify";
-import { postsRoutes } from "./posts.routes";
+import postsRoutes from "./posts.routes";
 
 describe("Posts Routes", () => {
   // --- Test #1: Create a Post ---

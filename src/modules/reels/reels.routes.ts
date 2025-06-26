@@ -1,12 +1,7 @@
 // reels.routes.ts
+import { CreateReelPayload } from "./reels.types";
 import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { reelsService } from "./reels.service";
-
-// Define a type for the request body
-type CreateReelBody = {
-  mov_url: string;
-  caption: string;
-};
 
 const reelsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const service = reelsService(fastify);
@@ -14,11 +9,11 @@ const reelsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   // GET /reels/grid
   fastify.get("/reels/grid", async (_request, reply) => {
     const reels = await service.getAll();
-    reply.send(reels);
+    return reply.code(200).send(reels); // reply the explici status 
   });
 
   // POST /reels
-  fastify.post<{ Body: CreateReelBody }>("/reels", async (request, reply) => {
+  fastify.post<{ Body: CreateReelPayload }>("/reels", async (request, reply) => {
     const newReel = await service.create(request.body);
     return reply.code(201).send(newReel);
   });

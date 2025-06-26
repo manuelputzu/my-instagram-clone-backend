@@ -11,3 +11,8 @@ export const ReelSchema = z.object({
 
 // TypeScript type inferred from schema
 export type Reel = z.infer<typeof ReelSchema>;
+
+// PAyload Schema
+export const CreateReelSchema = ReelSchema.omit({ id:true });
+
+export type CreateReelPayload = z.infer<typeof CreateReelSchema>;

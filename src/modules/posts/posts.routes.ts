@@ -1,11 +1,6 @@
+import type { CreatePostPayload } from "./posts.types";
 import type { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { postsService } from "./posts.service";
-
-// Define a type for the request body
-type CreatePostBody = {
-  img_url: string;
-  caption: string;
-};
 
 const postsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const service = postsService(fastify);
@@ -17,7 +12,7 @@ const postsRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   });
 
   // POST /posts
-  fastify.post<{ Body: CreatePostBody }>("/posts", async (request, reply) => {
+  fastify.post<{ Body: CreatePostPayload }>("/posts", async (request, reply) => {
     const newPost = await service.create(request.body);
     return reply.code(201).send(newPost);
   });

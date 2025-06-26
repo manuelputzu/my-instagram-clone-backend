@@ -4,7 +4,9 @@ import { databasePlugin } from "./core/database/database.plugin";
 import postsRoutes from "./modules/posts/posts.routes";
 import reelsRoutes from "./modules/reels/reels.routes";
 
-const fastify = Fastify();
+const fastify = Fastify({
+  logger: true,
+});
 
 //register health route
 fastify.register(healthRoutes);
